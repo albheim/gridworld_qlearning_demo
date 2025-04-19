@@ -9,21 +9,27 @@
 <body>
     <div id="general-info">
         <h1>Grid World Q-Learning Demo</h1>
-        <p>Welcome to the Grid World Q-Learning demo! This application demonstrates how an agent learns to navigate a grid world using the Q-learning algorithm.</p>
-        <p>Use the settings on the left to adjust parameters like learning rate, exploration rate, and simulation speed. You can also reset the simulation or switch between manual and autoplay modes.</p>
+        <p>Welcome to the Grid World Q-Learning demo! This application demonstrates how the Q-values are updated in a simple grid world environment using Q-learning.</p>
+        <p>The rules of the gridworld are simple:</p>
+        <ul>
+            <li>Starting from the yellow square, the goal is to reach the green square. The gray square is a wall and cannot be crossed.</li>
+            <li>Each timestep the player moves up, down, left, or right and incurs a reward of -1.</li>
+            <li>When the player reaches the green square, they receive a reward of +100.</li>
+        </ul>
+        <p>Use the settings on the left to adjust parameters (hover the labels for more info), change mode or reset the simulation.</p>
     </div>
 
     <div id="container">
         <div id="controls">
             <label for="alpha-slider" title="Controls the learning rate (alpha). Higher values make the agent learn faster but less stable.">
-                Learning Rate (Alpha):
+                Learning Rate:
             </label>
             <input type="range" id="alpha-slider" min="0.01" max="1" step="0.01" value="0.1">
             <span id="alpha-value">0.1</span>
             <br>
 
             <label for="epsilon-slider" title="Controls the exploration rate (epsilon). Higher values make the agent explore more. Typically good to start higher and decrease over time.">
-                Exploration Rate (Epsilon):
+                Exploration Rate:
             </label>
             <input type="range" id="epsilon-slider" min="0.01" max="1" step="0.01" value="0.1">
             <span id="epsilon-value">0.1</span>
@@ -43,7 +49,7 @@
             <span id="q-init-value">0.0</span>
             <br>
 
-            <label for="mode-select" title="Select the mode of operation: Manual Play or Epsilon-Greedy Autoplay.">
+            <label for="mode-select" title="Select the mode of operation: Manual Play (use arrow keys) or Epsilon-Greedy Autoplay (random action with exploration rate probability, else choose whichever action has the higher Q-value).">
                 Mode:
             </label>
             <select id="mode-select">
@@ -72,18 +78,18 @@
         </div>
 
         <div id="instructions">
-            <h2>Q-Learning Algorithm</h2>
             <h3>Q-Value Update Equation</h3>
             <p>The Q-value update equation used in this demo is:</p>
             <div id="q-equation">
                 <code>
-                    Q(s, a) ← Q(s, a) + α * (r + max<sub>a'</sub> Q(s', a') - Q(s, a))
+                    Q(s, a) ← Q(s, a) + <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;α * (r + max<sub>a'</sub> Q(s', a') - Q(s, a))
                 </code>
             </div>
             <p>Where:</p>
             <ul>
                 <li><strong>Q(s, a):</strong> Current Q-value for state <code>s</code> and action <code>a</code>.</li>
-                <li><strong>α (alpha):</strong> Learning rate, controls how much new information overrides old information.</li>
+                <li><strong>α:</strong> Learning rate, controls how much new information overrides old information.</li>
                 <li><strong>r:</strong> Reward received after taking action <code>a</code> in state <code>s</code>.</li>
                 <li><strong>max<sub>a'</sub> Q(s', a'):</strong> Maximum Q-value for the next state <code>s'</code> over all possible actions <code>a'</code>.</li>
             </ul>

@@ -22,7 +22,7 @@ body {
 /* Controls section */
 #controls {
     flex: 1;
-    max-width: 300px;
+    max-width: 400px;
     display: grid;
     grid-template-columns: auto 1fr auto auto; /* Label, slider, value, extra? */
     gap: 10px; /* Space between elements */
@@ -33,7 +33,6 @@ body {
 /* Style for labels */
 #controls label {
     text-align: right; /* Align labels to the right */
-    padding-right: 10px; /* Add space between label and slider */
 }
 
 /* Style for sliders */
@@ -217,6 +216,7 @@ body {
 /* General info section */
 #general-info {
     text-align: center;
+    max-width: 1200px;
     padding: 20px;
     background-color: #f4f4f4;
     border-bottom: 1px solid #ddd;
@@ -230,6 +230,14 @@ body {
 }
 
 #general-info p {
+    text-align: left;
+    margin: 10px 0;
+    font-size: 16px;
+    color: #555;
+}
+
+#general-info ul {
+    text-align: left;
     margin: 10px 0;
     font-size: 16px;
     color: #555;
