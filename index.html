@@ -1,100 +1,185 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grid World Q-Function</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <div id="general-info">
-        <h1>Grid World Q-Learning Demo</h1>
-        <p>Welcome to the Grid World Q-Learning demo! This application demonstrates how the Q-values are updated in a simple grid world environment using Q-learning.</p>
-        <p>The rules of the gridworld are simple:</p>
-        <ul>
-            <li>Starting from the yellow square, the goal is to reach the green square. The gray square is a wall and cannot be crossed.</li>
-            <li>Each timestep the player moves up, down, left, or right and incurs a reward of -1.</li>
-            <li>When the player reaches the green square, they receive a reward of +100.</li>
-        </ul>
-        <p>Use the settings on the left to adjust parameters (hover the labels for more info), change mode or reset the simulation.</p>
-    </div>
-
-    <div id="container">
-        <div id="controls">
-            <label for="alpha-slider" title="Controls the learning rate (alpha). Higher values make the agent learn faster but less stable.">
-                Learning Rate:
-            </label>
-            <input type="range" id="alpha-slider" min="0.01" max="1" step="0.01" value="0.1">
-            <span id="alpha-value">0.1</span>
-            <br>
-
-            <label for="epsilon-slider" title="Controls the exploration rate (epsilon). Higher values make the agent explore more. Typically good to start higher and decrease over time.">
-                Exploration Rate:
-            </label>
-            <input type="range" id="epsilon-slider" min="0.01" max="1" step="0.01" value="0.1">
-            <span id="epsilon-value">0.1</span>
-            <br>
-
-            <label for="speed-slider" title="Controls the simulation speed in milliseconds. Lower values make the simulation faster.">
-                Simulation Speed (ms):
-            </label>
-            <input type="range" id="speed-slider" min="0" max="2000" step="100" value="500">
-            <span id="speed-value">500</span>
-            <br>
-
-            <label for="q-init-slider" title="Sets the initial Q-value for all state-action pairs. Higher values can lead to more aggressive exploration.">
-                Initial Q-Value:
-            </label>
-            <input type="range" id="q-init-slider" min="-10" max="10" step="0.1" value="0">
-            <span id="q-init-value">0.0</span>
-            <br>
-
-            <label for="mode-select" title="Select the mode of operation: Manual Play (use arrow keys) or Epsilon-Greedy Autoplay (random action with exploration rate probability, else choose whichever action has the higher Q-value).">
-                Mode:
-            </label>
-            <select id="mode-select">
-                <option value="manual">Manual Play</option>
-                <option value="epsilon-greedy">Epsilon-Greedy Autoplay</option>
-            </select>
-            <p></p>
-            <br>
-
-            <p></p>
-            <button id="reset-button" title="Resets the Q-values and the agent's position.">Reset</button>
-            <p></p>
-            <p></p>
-        </div>
-
-        <div id="grid">
-            <div class="cell" id="cell-0-0"></div>
-            <div class="cell" id="cell-0-1"></div>
-            <div class="cell" id="cell-0-2"></div>
-            <div class="cell" id="cell-1-0"></div>
-            <div class="cell" id="cell-1-1"></div>
-            <div class="cell" id="cell-1-2"></div>
-            <div class="cell" id="cell-2-0"></div>
-            <div class="cell" id="cell-2-1"></div>
-            <div class="cell" id="cell-2-2"></div>
-        </div>
-
-        <div id="instructions">
-            <h3>Q-Value Update Equation</h3>
-            <p>The Q-value update equation used in this demo is:</p>
-            <div id="q-equation">
-                <code>
-                    Q(s, a) ← Q(s, a) + <br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;α * (r + max<sub>a'</sub> Q(s', a') - Q(s, a))
-                </code>
-            </div>
-            <p>Where:</p>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Grid World Q-Function</title>
+        <link rel="stylesheet" href="styles.css" />
+    </head>
+    <body>
+        <div id="general-info">
+            <h1>Grid World Q-Learning Demo</h1>
+            <p>
+                Welcome to the Grid World Q-Learning demo! This application
+                demonstrates how the Q-values are updated in a simple grid world
+                environment using Q-learning.
+            </p>
+            <p>The rules of the gridworld are simple:</p>
             <ul>
-                <li><strong>Q(s, a):</strong> Current Q-value for state <code>s</code> and action <code>a</code>.</li>
-                <li><strong>α:</strong> Learning rate, controls how much new information overrides old information.</li>
-                <li><strong>r:</strong> Reward received after taking action <code>a</code> in state <code>s</code>.</li>
-                <li><strong>max<sub>a'</sub> Q(s', a'):</strong> Maximum Q-value for the next state <code>s'</code> over all possible actions <code>a'</code>.</li>
+                <li>
+                    Starting from the green square, the goal is to reach the
+                    yellow square. The gray square is a wall and cannot be
+                    crossed.
+                </li>
+                <li>
+                    Each timestep the player moves up, down, left, or right and
+                    incurs a reward of -1.
+                </li>
+                <li>
+                    When the player reaches the yellow square, they receive a
+                    reward of +100.
+                </li>
             </ul>
+            <p>
+                Use the settings on the left to adjust parameters (hover the
+                labels for more info), change mode or reset the simulation.
+            </p>
         </div>
-    </div>
-    <script src="app.js"></script>
-</body>
+
+        <div id="container">
+            <div id="controls">
+                <label
+                    for="alpha-slider"
+                    title="Controls the learning rate (alpha). Higher values make the agent learn faster but less stable."
+                >
+                    Learning Rate:
+                </label>
+                <input
+                    type="range"
+                    id="alpha-slider"
+                    min="0.01"
+                    max="1"
+                    step="0.01"
+                    value="0.1"
+                />
+                <span id="alpha-value">0.1</span>
+                <br />
+
+                <label
+                    for="epsilon-slider"
+                    title="Controls the exploration rate (epsilon). Higher values make the agent explore more. Typically good to start higher and decrease over time."
+                >
+                    Exploration Rate:
+                </label>
+                <input
+                    type="range"
+                    id="epsilon-slider"
+                    min="0.01"
+                    max="1"
+                    step="0.01"
+                    value="0.1"
+                />
+                <span id="epsilon-value">0.1</span>
+                <br />
+
+                <label
+                    for="speed-slider"
+                    title="Controls the simulation speed in milliseconds. Lower values make the simulation faster."
+                >
+                    Simulation Speed (ms):
+                </label>
+                <input
+                    type="range"
+                    id="speed-slider"
+                    min="0"
+                    max="2000"
+                    step="100"
+                    value="500"
+                />
+                <span id="speed-value">500</span>
+                <br />
+
+                <label
+                    for="q-init-slider"
+                    title="Sets the initial Q-value for all state-action pairs. Higher values can lead to more aggressive exploration."
+                >
+                    Initial Q-Value:
+                </label>
+                <input
+                    type="range"
+                    id="q-init-slider"
+                    min="-10"
+                    max="10"
+                    step="0.1"
+                    value="0"
+                />
+                <span id="q-init-value">0.0</span>
+                <br />
+
+                <label
+                    for="mode-select"
+                    title="Select the mode of operation: Manual Play (use arrow keys) or Epsilon-Greedy Autoplay (random action with exploration rate probability, else choose whichever action has the higher Q-value)."
+                >
+                    Mode:
+                </label>
+                <select id="mode-select">
+                    <option value="manual">Manual Play</option>
+                    <option value="epsilon-greedy">
+                        Epsilon-Greedy Autoplay
+                    </option>
+                </select>
+                <p></p>
+                <br />
+
+                <p></p>
+                <button
+                    id="reset-button"
+                    title="Resets the Q-values and the agent's position."
+                >
+                    Reset Q-values
+                </button>
+                <p></p>
+                <p></p>
+            </div>
+
+            <div id="grid">
+                <div class="cell" id="cell-0-0"></div>
+                <div class="cell" id="cell-0-1"></div>
+                <div class="cell" id="cell-0-2"></div>
+                <div class="cell" id="cell-1-0"></div>
+                <div class="cell" id="cell-1-1"></div>
+                <div class="cell" id="cell-1-2"></div>
+                <div class="cell" id="cell-2-0"></div>
+                <div class="cell" id="cell-2-1"></div>
+                <div class="cell" id="cell-2-2"></div>
+            </div>
+
+            <div id="instructions">
+                <h3>Q-Value Update Equation</h3>
+                <p>The Q-value update equation used in this demo is:</p>
+                <div id="q-equation">
+                    <code>
+                        Q(s, a) ← <span style="color: red">(1 - α)</span> * Q(s,
+                        a) + <br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <span style="color: red">α</span> * (r + max<sub
+                            >a'</sub
+                        >
+                        Q(s', a'))
+                    </code>
+                </div>
+                <p>Where:</p>
+                <ul>
+                    <li>
+                        <strong>Q(s, a):</strong> Current Q-value for state
+                        <code>s</code> and action <code>a</code>.
+                    </li>
+                    <li>
+                        <strong>α:</strong> Learning rate, controls how much new
+                        information overrides old information.
+                    </li>
+                    <li>
+                        <strong>r:</strong> Reward received after taking action
+                        <code>a</code> in state <code>s</code>.
+                    </li>
+                    <li>
+                        <strong>max<sub>a'</sub> Q(s', a'):</strong> Maximum
+                        Q-value for the next state <code>s'</code> over all
+                        possible actions <code>a'</code>.
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <script src="app.js"></script>
+    </body>
 </html>

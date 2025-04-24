@@ -50,7 +50,7 @@ body {
 #grid {
     display: grid;
     grid-template-columns: repeat(3, 100px); /* 3 columns, each 100px wide */
-    grid-template-rows: repeat(3, 100px);    /* 3 rows, each 100px tall */
+    grid-template-rows: repeat(3, 100px); /* 3 rows, each 100px tall */
     gap: 5px;
     width: calc(3 * 100px + 2 * 5px); /* Total width: 3 cells + 2 gaps */
     height: calc(3 * 100px + 2 * 5px); /* Total height: 3 cells + 2 gaps */
@@ -104,11 +104,11 @@ body {
 }
 
 #cell-0-0 {
-    background-color: yellow; /* Yellow for the start */
+    background-color: green; /* Yellow for the start */
 }
 
 #cell-2-0 {
-    background-color: green; /* Green for the finish */
+    background-color: yellow; /* Green for the finish */
 }
 
 .robot {
@@ -165,7 +165,7 @@ body {
     justify-content: center;
     align-items: center;
     font-size: 50px; /* Adjust font size for visibility */
-    background-color: rgba(255, 255, 255, 0.0);
+    background-color: rgba(255, 255, 255, 0);
     border-radius: 5px; /* Add rounded corners */
     z-index: 10; /* Ensure the overlay is above other elements */
     pointer-events: none; /* Allow interaction with underlying elements */
@@ -190,7 +190,8 @@ body {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-#instructions h2, #instructions h3 {
+#instructions h2,
+#instructions h3 {
     margin-top: 0;
 }
 
@@ -203,7 +204,7 @@ body {
 }
 
 #q-equation {
-    font-family: 'Courier New', Courier, monospace;
+    font-family: "Courier New", Courier, monospace;
     font-size: 16px;
     background-color: #f4f4f4;
     padding: 10px;
